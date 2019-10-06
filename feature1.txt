@@ -1,1 +1,1 @@
-s is a demo feature file
+this is a demo feature file
