@@ -1,0 +1,50 @@
+* Project Overview
+
+As PEcAn is currently build and tested using GitHub, Travis and Docker, looking at the changes suggested in the buiding and testing starategy would be more-like a DevOps
+implementation using GitHub actions. In DevOps per-se, the motive of the project and its implementation would be to automate the build and test using GitHub actions. 
+The DevOps implementation basically consists of CI (Continuous Integration) and CD (Continuous Deployment). Continuous Integration enables your team to adhere to their
+quality standards by running tests and reporting the results on GitHub. CI tools run tests and trigger builds via commits. The results are then published on GitHub.
+
+
+* Project Implementation
+
+In terms of starting the project from the scratch, we can take up the tasks from the stage where we have the application ready to be dockerized using Dockerfile. All the 
+parameters required by the Dockerfile to build the containers should be put in the action metadata file. To create a workflow, we will use "PUSH" event to trigger the workflows
+stored at .github/workflows/. This will ensure that action file gets in action once the push has been committed. Action will work as a trigger to initiate the workflow 
+execution.
+
+The build job present in the workflow will select the OS, node version, execution steps and other details while the remaining part of this project i.e. automated test 
+implementation using GitHub actions, we have to customise templated workflow using GitHub actions.
+For eg. Lets suppose that the codebase is in Node.js. GitHub Actions allows us to use some templated workflows for common languages and frameworks, like Node.js! We can 
+introduce any integrated JS testing framework like Jest, using a pull request.
+If mupliple versions of node exist, we can specify the targetted versions selectively.
+
+Custom workflow creation provides:
+ - Test against multiple targets so that we know if our supported operating systems and Node.js versions are working
+ - Dedicated test job so that we can separate out build from test details
+ - Access to build artifacts so that we can deploy them to a target environment
+ - Branch protections so that the main branch can't be deleted or inadvertently broken
+ - Required reviews so that any pull requests are double checked by teammates
+ 
+Test jobs should ensure build job success before executing test job. Once the workflow executes the build job according to the config present in the build matrix, the artifacts 
+should be uploaded to save job's build artifacts using GitHub actions: actions/upload-artifact. Similarly, for artifacts download, use actions/download-artifact. Share the CI 
+with the team.
+
+The mentioned implementation also has a scope to integrate the automation of reviews and pull-request reviews and approvals.
+
+
+* Project Steps
+
+Design Workflows in .github/workflows
+ - Create custom GitHub actions workflow.
+ - Create Build and Test jobs separately in the workflow.
+Add Build steps and parameters in build job
+ -  Add targetted environments.
+Add Test steps and parameters in test job
+ -  Add artifactory management steps in the pipeline.
+Create/ configure a Build Matrix
+ - allows us to test across multiple operating systems, platforms, and language versions.
+Artifact management: upload, download after build completion for test.
+ 
+ * Scope for automated reviews and pull-request reviews and approvals.
+
